@@ -2,6 +2,7 @@ class Solution:
     def shiftGrid(self, grid: List[List[int]], k: int) -> List[List[int]]:
         m, n = len(grid), len(grid[0])
         start = m * n - k % (m * n)
+        print(start)
         ans = []
         for i in range(start, m * n + start):
             j = i % (m * n)
