@@ -1,27 +1,31 @@
 class MyHashSet:
-
     def __init__(self):
-        self.hash_dict = {}
-        
+        self.size = 10000
+        self.buckets = [[] for _ in range(self.size)]
 
-    def add(self, key: int) -> None:
-        self.hash_dict[key] = self.hash_dict.get(key, 0) + 1
-        
+    def add(self, key):
+        bucket, idx = self._index(key)
+        if idx >= 0:
+            return
+        bucket.append(key)
 
-    def remove(self, key: int) -> None:
-        if self.hash_dict.get(key) is not None:
-            self.hash_dict.pop(key)
-        
+    def remove(self, key):
+        bucket, idx = self._index(key)
+        if idx < 0:
+            return
+        bucket.remove(key)
 
-    def contains(self, key: int) -> bool:
-        if self.hash_dict.get(key) is not None:
-            return True
-        return False
-        
+    def contains(self, key):
+        _, idx = self._index(key)
+        return idx >= 0
 
+    def _hash(self, key):
+        return key % self.size
 
-# Your MyHashSet object will be instantiated and called as such:
-# obj = MyHashSet()
-# obj.add(key)
-# obj.remove(key)
-# param_3 = obj.contains(key)
+    def _index(self, key):
+        hash = self._hash(key)
+        bucket = self.buckets[hash]
+        for i, k in enumerate(bucket):
+            if k == key:
+                return bucket, i
+        return bucket, -1
