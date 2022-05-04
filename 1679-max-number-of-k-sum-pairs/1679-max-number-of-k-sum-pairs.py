@@ -1,19 +1,17 @@
 class Solution:
     def maxOperations(self, nums: List[int], k: int) -> int:
-        nums.sort()
-        i, j = 0, len(nums) - 1
+        freq_dict = {}
         op = 0
-        while i < j:
-            temp = nums[i] + nums[j]
-            if temp == k:
+        for num in nums:
+            res = k - num
+            if freq_dict.get(res) is not None:
                 op += 1
-                i += 1
-                j -= 1
-            elif temp < k:
-                i += 1
+                if freq_dict.get(res) == 1:
+                    freq_dict.pop(res)
+                else:
+                    freq_dict[res] -= 1
             else:
-                j -= 1
+                freq_dict[num] = freq_dict.get(num, 0) + 1
         
         return op
-                
         
