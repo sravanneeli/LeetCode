@@ -7,6 +7,7 @@ class Solution:
                 ans.append(arr)
 
             for i in range(len(nums)):
+                # print(nums)
                 backtrack(nums[:i]+nums[i+1:], arr+[nums[i]])
         backtrack(nums, [])
         return ans
