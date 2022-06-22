@@ -1,16 +1,18 @@
 class Solution:
     def reverse(self, x: int) -> int:
         ans = 0
-        temp = abs(x)
-        prod = 1
-        if x != temp:
-            prod = -1
-        while temp:
-            ans = ans * 10 + temp % 10
-            temp //= 10
+        flag = 1
+        if x < 0:
+            flag = -1
+            x = abs(x)
             
-        if ans < 2**31:
-            return prod * ans
+        while x > 0:
+            digit = x % 10
+            ans = ans * 10 + digit
+            x //= 10
+            
+        if ans > (2**31 - 1) or ans < -1 * 2**31:
+            return 0
         
-        return 0
+        return flag * ans
         
