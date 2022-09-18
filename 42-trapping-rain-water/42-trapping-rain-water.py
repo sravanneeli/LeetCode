@@ -1,15 +1,20 @@
 class Solution:
     def trap(self, height: List[int]) -> int:
-        left_max = [height[-1]]
-        n = len(height)
-        for i in range(n-2, -1, -1):
-            temp = max(left_max[0], height[i])
-            left_max.insert(0, temp)
         
-        right_max = [height[0]]
+        n = len(height)
+        
+        left_max = [0] * n
+        right_max = [0] * n
+        left_max[-1] = height[-1]
+        right_max[0] = height[0]
+        
+        for i in range(n-2, -1, -1):
+            left_max[i] = max(left_max[i+1], height[i])
+        
+        
         for i in range(1, n):
-            temp = max(right_max[-1], height[i])
-            right_max.append(temp)
+            right_max[i] = max(right_max[i-1], height[i])
+            
         # print(left_max)
         # print(right_max)
         ans = 0
